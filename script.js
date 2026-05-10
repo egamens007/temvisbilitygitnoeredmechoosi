@@ -59,6 +59,7 @@ ${descripcion}
   document.getElementById("resultado").value = html;
 }
 
+
 function generarCVE() {
 
   let producto =
@@ -82,7 +83,7 @@ function generarCVE() {
   let desc =
     document.getElementById("cvedesc").value;
 
-  // COLOR SEVERIDAD
+  // COLOR SEGÚN SEVERIDAD
 
   let color = "#16a34a";
 
@@ -98,20 +99,92 @@ function generarCVE() {
     color = "#d97706";
   }
 
-  let html = `
-<div style="max-width:1200px;margin:40px auto;font-family:Arial, sans-serif;color:#0f172a;line-height:1.8;">
+  // HTML FINAL
 
-  <div style="display:grid;grid-template-columns:2fr 360px;gap:35px;align-items:start;">
+  let html = `
+<style>
+
+.cti-container{
+  max-width:1200px;
+  margin:40px auto;
+  padding:15px;
+  font-family:Arial,sans-serif;
+  color:#0f172a;
+  line-height:1.8;
+}
+
+.cti-grid{
+  display:grid;
+  grid-template-columns:2fr 360px;
+  gap:35px;
+  align-items:start;
+}
+
+.cti-main h2,
+.cti-sidebar h3{
+  word-wrap:break-word;
+  overflow-wrap:break-word;
+}
+
+.cti-main p,
+.cti-main li{
+  word-wrap:break-word;
+  overflow-wrap:break-word;
+}
+
+.cti-sidebar{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  box-shadow:0 10px 30px rgba(15,23,42,0.10);
+  padding:25px;
+  border-radius:4px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+  .cti-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cti-sidebar{
+    width:100%;
+    padding:20px;
+    box-sizing:border-box;
+  }
+
+  .cti-main h2{
+    font-size:24px !important;
+  }
+
+}
+
+</style>
+
+<div class="cti-container">
+
+  <div class="cti-grid">
 
     <!-- CONTENIDO PRINCIPAL -->
 
-    <main>
+    <main class="cti-main">
 
-      <p style="font-size:13px;font-weight:700;color:#334155;margin-bottom:20px;letter-spacing:1px;">
+      <p style="
+        font-size:13px;
+        font-weight:700;
+        color:#334155;
+        margin-bottom:20px;
+        letter-spacing:1px;
+      ">
         ALERTA / CVE / CSIRT
       </p>
 
-      <h2 style="font-size:28px;margin-top:30px;color:#020617;">
+      <h2 style="
+        font-size:28px;
+        margin-top:30px;
+        color:#020617;
+      ">
         Síntesis
       </h2>
 
@@ -127,7 +200,11 @@ function generarCVE() {
         Se recomienda aplicar las actualizaciones de seguridad proporcionadas por el fabricante lo antes posible y monitorear posibles intentos de explotación relacionados con ${cve}.
       </p>
 
-      <h2 style="font-size:28px;margin-top:30px;color:#020617;">
+      <h2 style="
+        font-size:28px;
+        margin-top:30px;
+        color:#020617;
+      ">
         Tipología
       </h2>
 
@@ -136,7 +213,11 @@ function generarCVE() {
         <li>Vulnerabilidad de seguridad</li>
       </ul>
 
-      <h2 style="font-size:28px;margin-top:30px;color:#020617;">
+      <h2 style="
+        font-size:28px;
+        margin-top:30px;
+        color:#020617;
+      ">
         Productos y versiones afectadas
       </h2>
 
@@ -148,7 +229,11 @@ function generarCVE() {
         <li>${versiones}</li>
       </ul>
 
-      <h2 style="font-size:28px;margin-top:35px;color:#020617;">
+      <h2 style="
+        font-size:28px;
+        margin-top:35px;
+        color:#020617;
+      ">
         Recomendaciones
       </h2>
 
@@ -163,16 +248,30 @@ function generarCVE() {
 
     </main>
 
-    <!-- PANEL LATERAL -->
+    <!-- PANEL DERECHO -->
 
-    <aside style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(15,23,42,0.10);padding:25px;border-radius:4px;">
+    <aside class="cti-sidebar">
 
-      <h3 style="font-size:20px;margin-top:0;color:#020617;border-bottom:1px solid #cbd5e1;padding-bottom:12px;">
+      <h3 style="
+        font-size:20px;
+        margin-top:0;
+        color:#020617;
+        border-bottom:1px solid #cbd5e1;
+        padding-bottom:12px;
+      ">
         Impacto sistémico
       </h3>
 
-      <p style="font-size:16px;margin:15px 0;line-height:1.8;">
-        <span style="color:${color};font-weight:700;">
+      <p style="
+        font-size:16px;
+        margin:15px 0;
+        line-height:1.8;
+      ">
+
+        <span style="
+          color:${color};
+          font-weight:700;
+        ">
           ● ${severidad}
         </span>
 
@@ -184,34 +283,75 @@ function generarCVE() {
 
         <a href="${link}"
            target="_blank"
-           style="color:#005bd3;font-weight:700;text-decoration:none;">
+           style="
+             color:#005bd3;
+             font-weight:700;
+             text-decoration:none;
+             word-break:break-word;
+           ">
 
            ${cve}
 
         </a>
+
       </p>
 
-      <h3 style="font-size:20px;margin-top:30px;color:#020617;border-bottom:1px solid #cbd5e1;padding-bottom:12px;">
+      <h3 style="
+        font-size:20px;
+        margin-top:30px;
+        color:#020617;
+        border-bottom:1px solid #cbd5e1;
+        padding-bottom:12px;
+      ">
         Argumentos
       </h3>
 
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:15px 0;">
+      <div style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        margin:15px 0;
+      ">
 
-        <span style="border:1px solid #0066cc;color:#0066cc;border-radius:20px;padding:6px 14px;font-size:14px;">
+        <span style="
+          border:1px solid #0066cc;
+          color:#0066cc;
+          border-radius:20px;
+          padding:6px 14px;
+          font-size:14px;
+        ">
           ${producto}
         </span>
 
-        <span style="border:1px solid #0066cc;color:#0066cc;border-radius:20px;padding:6px 14px;font-size:14px;">
+        <span style="
+          border:1px solid #0066cc;
+          color:#0066cc;
+          border-radius:20px;
+          padding:6px 14px;
+          font-size:14px;
+        ">
           ${cve}
         </span>
 
-        <span style="border:1px solid #0066cc;color:#0066cc;border-radius:20px;padding:6px 14px;font-size:14px;">
+        <span style="
+          border:1px solid #0066cc;
+          color:#0066cc;
+          border-radius:20px;
+          padding:6px 14px;
+          font-size:14px;
+        ">
           CVSS ${cvss}
         </span>
 
       </div>
 
-      <h3 style="font-size:20px;margin-top:30px;color:#020617;border-bottom:1px solid #cbd5e1;padding-bottom:12px;">
+      <h3 style="
+        font-size:20px;
+        margin-top:30px;
+        color:#020617;
+        border-bottom:1px solid #cbd5e1;
+        padding-bottom:12px;
+      ">
         Estado
       </h3>
 
