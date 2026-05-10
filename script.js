@@ -82,28 +82,154 @@ function generarCVE() {
   let desc =
     document.getElementById("cvedesc").value;
 
+  // COLOR SEVERIDAD
+
+  let color = "#16a34a";
+
+  if (severidad.toLowerCase().includes("alto")) {
+    color = "#dc2626";
+  }
+
+  if (severidad.toLowerCase().includes("crítico")) {
+    color = "#991b1b";
+  }
+
+  if (severidad.toLowerCase().includes("medio")) {
+    color = "#d97706";
+  }
+
   let html = `
-<h3>🚨 ${cve}</h3>
+<div style="max-width:1200px;margin:40px auto;font-family:Arial, sans-serif;color:#0f172a;line-height:1.8;">
 
-<p>
-${desc}
-</p>
+  <div style="display:grid;grid-template-columns:2fr 360px;gap:35px;align-items:start;">
 
-<ul>
-<li><strong>Producto:</strong> ${producto}</li>
-<li><strong>Severidad:</strong> ${severidad}</li>
-<li><strong>CVSS:</strong> ${cvss}</li>
-<li><strong>Versiones:</strong> ${versiones}</li>
-<li><strong>Referencia:</strong>
-<a href="${link}" target="_blank">
-Ver advisory
-</a>
-</li>
-</ul>
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main>
+
+      <p style="font-size:13px;font-weight:700;color:#334155;margin-bottom:20px;letter-spacing:1px;">
+        ALERTA / CVE / CSIRT
+      </p>
+
+      <h2 style="font-size:28px;margin-top:30px;color:#020617;">
+        Síntesis
+      </h2>
+
+      <p style="text-align:justify;">
+        ${desc}
+      </p>
+
+      <p style="text-align:justify;">
+        La vulnerabilidad podría permitir a un atacante remoto comprometer la integridad del sistema afectado, ejecutar acciones no autorizadas o afectar la disponibilidad de los servicios vulnerables.
+      </p>
+
+      <p style="text-align:justify;">
+        Se recomienda aplicar las actualizaciones de seguridad proporcionadas por el fabricante lo antes posible y monitorear posibles intentos de explotación relacionados con ${cve}.
+      </p>
+
+      <h2 style="font-size:28px;margin-top:30px;color:#020617;">
+        Tipología
+      </h2>
+
+      <ul>
+        <li>${severidad}</li>
+        <li>Vulnerabilidad de seguridad</li>
+      </ul>
+
+      <h2 style="font-size:28px;margin-top:30px;color:#020617;">
+        Productos y versiones afectadas
+      </h2>
+
+      <p>
+        <strong>${producto}</strong>
+      </p>
+
+      <ul>
+        <li>${versiones}</li>
+      </ul>
+
+      <h2 style="font-size:28px;margin-top:35px;color:#020617;">
+        Recomendaciones
+      </h2>
+
+      <ul>
+        <li>Actualizar inmediatamente el producto afectado a la versión corregida.</li>
+        <li>Revisar registros y actividad sospechosa relacionada.</li>
+        <li>Aplicar medidas compensatorias si no es posible actualizar inmediatamente.</li>
+        <li>Restringir exposición innecesaria de servicios vulnerables.</li>
+        <li>Monitorear indicadores de explotación asociados a ${cve}.</li>
+        <li>Validar configuraciones de seguridad y controles de acceso.</li>
+      </ul>
+
+    </main>
+
+    <!-- PANEL LATERAL -->
+
+    <aside style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 10px 30px rgba(15,23,42,0.10);padding:25px;border-radius:4px;">
+
+      <h3 style="font-size:20px;margin-top:0;color:#020617;border-bottom:1px solid #cbd5e1;padding-bottom:12px;">
+        Impacto sistémico
+      </h3>
+
+      <p style="font-size:16px;margin:15px 0;line-height:1.8;">
+        <span style="color:${color};font-weight:700;">
+          ● ${severidad}
+        </span>
+
+        <span style="color:#64748b;">
+          (${cvss})
+        </span>
+
+        <br>
+
+        <a href="${link}"
+           target="_blank"
+           style="color:#005bd3;font-weight:700;text-decoration:none;">
+
+           ${cve}
+
+        </a>
+      </p>
+
+      <h3 style="font-size:20px;margin-top:30px;color:#020617;border-bottom:1px solid #cbd5e1;padding-bottom:12px;">
+        Argumentos
+      </h3>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:15px 0;">
+
+        <span style="border:1px solid #0066cc;color:#0066cc;border-radius:20px;padding:6px 14px;font-size:14px;">
+          ${producto}
+        </span>
+
+        <span style="border:1px solid #0066cc;color:#0066cc;border-radius:20px;padding:6px 14px;font-size:14px;">
+          ${cve}
+        </span>
+
+        <span style="border:1px solid #0066cc;color:#0066cc;border-radius:20px;padding:6px 14px;font-size:14px;">
+          CVSS ${cvss}
+        </span>
+
+      </div>
+
+      <h3 style="font-size:20px;margin-top:30px;color:#020617;border-bottom:1px solid #cbd5e1;padding-bottom:12px;">
+        Estado
+      </h3>
+
+      <p>
+        ✅ Actualización disponible
+      </p>
+
+    </aside>
+
+  </div>
+
+</div>
 `;
 
   document.getElementById("resultado").value = html;
 }
+
+
 
 function generarActor() {
 
