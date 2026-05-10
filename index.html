@@ -21,21 +21,23 @@
 
     <!-- TABS -->
 
-    <div class="tabs">
+<div class="tabs">
 
-      <button onclick="mostrarTab('leak')">
-        Leak
-      </button>
+  <button onclick="mostrarTab('leak')">📂 Leak</button>
 
-      <button onclick="mostrarTab('cve')">
-        CVE
-      </button>
+  <button onclick="mostrarTab('cve')">🚨 CVE</button>
 
-      <button onclick="mostrarTab('actor')">
-        Threat Actor
-      </button>
+  <button onclick="mostrarTab('actor')">👤 Threat Actor</button>
 
-    </div>
+  <button onclick="mostrarTab('ioc')">🌐 IOC</button>
+
+  <button onclick="mostrarTab('malware')">☣️ Malware</button>
+
+  <button onclick="mostrarTab('campaign')">🎯 Campaign</button>
+
+  <button onclick="mostrarTab('ransomware')">🔐 Ransomware</button>
+
+</div>
 
     <!-- ================= LEAK ================= -->
 
@@ -101,6 +103,85 @@
 
     </div>
 
+    <!-- ================= IOC ================= -->
+
+<div id="ioc" class="tab-content">
+
+  <h2>🌐 Generador IOC</h2>
+
+  <input id="iocTitulo" placeholder="Título del reporte IOC">
+  <input id="iocFuente" placeholder="Fuente / Campaña / Malware asociado">
+  <input id="iocFecha" placeholder="Fecha">
+
+  <textarea id="iocLista" placeholder="Pega aquí los IOCs, uno por línea: IPs, dominios, URLs, hashes"></textarea>
+
+  <button onclick="generarIOC()">
+    Generar HTML
+  </button>
+
+</div>
+
+<!-- ================= MALWARE ================= -->
+
+<div id="malware" class="tab-content">
+
+  <h2>☣️ Generador Malware</h2>
+
+  <input id="malwareNombre" placeholder="Nombre del malware">
+  <input id="malwareTipo" placeholder="Tipo: Stealer, RAT, Loader, Ransomware, etc.">
+  <input id="malwareVector" placeholder="Vector de infección">
+  <input id="malwareC2" placeholder="C2 / Infraestructura">
+  <input id="malwareImpacto" placeholder="Impacto principal">
+
+  <textarea id="malwareDescripcion" placeholder="Descripción del análisis"></textarea>
+
+  <button onclick="generarMalware()">
+    Generar HTML
+  </button>
+
+</div>
+
+<!-- ================= CAMPAIGN ================= -->
+
+<div id="campaign" class="tab-content">
+
+  <h2>🎯 Generador Campaign</h2>
+
+  <input id="campaignNombre" placeholder="Nombre de la campaña">
+  <input id="campaignObjetivo" placeholder="Objetivo / Sector afectado">
+  <input id="campaignPais" placeholder="País / Región">
+  <input id="campaignVector" placeholder="Vector: phishing, malspam, fake login, etc.">
+  <input id="campaignImpacto" placeholder="Impacto principal">
+
+  <textarea id="campaignDescripcion" placeholder="Descripción de la campaña"></textarea>
+
+  <button onclick="generarCampaign()">
+    Generar HTML
+  </button>
+
+</div>
+
+<!-- ================= RANSOMWARE ================= -->
+
+<div id="ransomware" class="tab-content">
+
+  <h2>🔐 Generador Ransomware</h2>
+
+  <input id="ransomGrupo" placeholder="Grupo ransomware">
+  <input id="ransomVictima" placeholder="Víctima / Organización">
+  <input id="ransomPais" placeholder="País">
+  <input id="ransomSector" placeholder="Sector">
+  <input id="ransomVolumen" placeholder="Volumen de datos">
+  <input id="ransomFecha" placeholder="Fecha">
+
+  <textarea id="ransomDescripcion" placeholder="Descripción del incidente"></textarea>
+
+  <button onclick="generarRansomware()">
+    Generar HTML
+  </button>
+
+</div>
+    
     <!-- RESULTADO -->
 
     <h2>🧾 Resultado HTML</h2>
