@@ -150,6 +150,7 @@ function copiarHTML() {
 
   alert("HTML copiado");
 }
+
 function generarIOC() {
 
   let titulo = document.getElementById("iocTitulo").value;
@@ -158,41 +159,100 @@ function generarIOC() {
   let lista = document.getElementById("iocLista").value;
 
   let iocs = lista
-    .split("\n")
+    .split(/\n|,|;/)
     .map(ioc => ioc.trim())
     .filter(ioc => ioc !== "");
 
-  let items = iocs
-    .map(ioc => `<li><code>${ioc}</code></li>`)
-    .join("\n");
+  // Eliminar duplicados
+  iocs = [...new Set(iocs)];
+
+  let categorias = {
+    urls: [],
+    ips: [],
+    dominios: [],
+    md5: [],
+    sha1: [],
+    sha256: [],
+    otros: []
+  };
+
+  iocs.forEach(ioc => {
+
+    let limpio = ioc.replace(/\[.\]/g, ".").replace("hxxp", "http");
+
+    if (/^https?:\/\/[^\s]+$/i.test(limpio)) {
+      categorias.urls.push(ioc);
+    }
+
+    else if (/^(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(\.(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})){3}$/.test(limpio)) {
+      categorias.ips.push(ioc);
+    }
+
+    else if (/^[a-fA-F0-9]{32}$/.test(limpio)) {
+      categorias.md5.push(ioc);
+    }
+
+    else if (/^[a-fA-F0-9]{40}$/.test(limpio)) {
+      categorias.sha1.push(ioc);
+    }
+
+    else if (/^[a-fA-F0-9]{64}$/.test(limpio)) {
+      categorias.sha256.push(ioc);
+    }
+
+    else if (/^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(limpio)) {
+      categorias.dominios.push(ioc);
+    }
+
+    else {
+      categorias.otros.push(ioc);
+    }
+
+  });
+
+  function crearBloque(titulo, items) {
+    if (items.length === 0) return "";
+
+    return `
+<h4>${titulo}</h4>
+<ul>
+${items.map(item => `<li><code>${item}</code></li>`).join("\n")}
+</ul>
+`;
+  }
 
   let html = `
 <div style="margin:20px 0;color:#cdd9e5;font-size:14px;line-height:1.6;">
 <strong>Tipo:</strong> Indicadores de Compromiso (IOC)<br>
 <strong>Fuente:</strong> ${fuente}<br>
-<strong>Fecha:</strong> ${fecha}
+<strong>Fecha:</strong> ${fecha}<br>
+<strong>Total de IOC:</strong> ${iocs.length}
 </div>
 
 <h3>🌐 ${titulo}</h3>
 
 <p>
-Se comparte el siguiente conjunto de indicadores de compromiso asociados a una actividad sospechosa, campaña maliciosa o infraestructura observada. 
-Estos IOCs pueden ser utilizados para labores de monitoreo, búsqueda retroactiva, bloqueo preventivo y fortalecimiento de controles de seguridad.
+Se comparte el siguiente conjunto de indicadores de compromiso asociados a actividad sospechosa, campaña maliciosa o infraestructura observada.
+Estos indicadores pueden utilizarse para monitoreo, búsqueda retroactiva, bloqueo preventivo y fortalecimiento de controles de seguridad.
 </p>
 
-<h3>📌 Indicadores de Compromiso</h3>
+<h3>📌 Indicadores de Compromiso Clasificados</h3>
 
-<ul>
-${items}
-</ul>
+${crearBloque("🌐 URLs", categorias.urls)}
+${crearBloque("🧭 Direcciones IP", categorias.ips)}
+${crearBloque("🌍 Dominios", categorias.dominios)}
+${crearBloque("🔑 Hashes MD5", categorias.md5)}
+${crearBloque("🔑 Hashes SHA1", categorias.sha1)}
+${crearBloque("🔑 Hashes SHA256", categorias.sha256)}
+${crearBloque("📎 Otros indicadores", categorias.otros)}
 
 <h3>🛡️ Recomendaciones</h3>
 
 <ul>
-<li>Bloquear los indicadores en firewall, proxy, EDR o SIEM según corresponda.</li>
-<li>Realizar búsqueda retroactiva en logs internos.</li>
-<li>Verificar conexiones salientes hacia dominios, IPs o URLs sospechosas.</li>
-<li>No ejecutar archivos asociados sin análisis previo en entorno controlado.</li>
+<li>Bloquear los indicadores en firewall, proxy, EDR, SIEM o DNS filtering según corresponda.</li>
+<li>Realizar búsqueda retroactiva en logs internos para identificar posibles conexiones previas.</li>
+<li>Verificar conexiones salientes hacia IPs, dominios o URLs sospechosas.</li>
+<li>No ejecutar archivos asociados sin análisis previo en un entorno controlado.</li>
 <li>Monitorear posibles variantes o infraestructura relacionada.</li>
 </ul>
 `;
