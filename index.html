@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTI Generator</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>🛡️ CiberAlerta CTI Generator</h1>
+
+    <p class="subtitle">
+      Generador de posts HTML para filtraciones, CVEs y Threat Intelligence
+    </p>
+
+    <!-- TABS -->
+
+    <div class="tabs">
+
+      <button onclick="mostrarTab('leak')">
+        Leak
+      </button>
+
+      <button onclick="mostrarTab('cve')">
+        CVE
+      </button>
+
+      <button onclick="mostrarTab('actor')">
+        Threat Actor
+      </button>
+
+    </div>
+
+    <!-- ================= LEAK ================= -->
+
+    <div id="leak" class="tab-content active">
+
+      <h2>📂 Generador Leak</h2>
+
+      <input id="actor" placeholder="Threat Actor">
+      <input id="grupo" placeholder="Grupo">
+      <input id="objetivo" placeholder="Objetivo">
+      <input id="pais" placeholder="País">
+      <input id="volumen" placeholder="Volumen">
+      <input id="tipo" placeholder="Tipo de incidente">
+
+      <textarea id="descripcion"
+        placeholder="Descripción del incidente"></textarea>
+
+      <button onclick="generarLeak()">
+        Generar HTML
+      </button>
+
+    </div>
+
+    <!-- ================= CVE ================= -->
+
+    <div id="cve" class="tab-content">
+
+      <h2>🚨 Generador CVE</h2>
+
+      <input id="producto" placeholder="Producto">
+      <input id="cveid" placeholder="CVE">
+      <input id="severidad" placeholder="Severidad">
+      <input id="cvss" placeholder="CVSS">
+      <input id="versiones" placeholder="Versiones afectadas">
+      <input id="link" placeholder="Link oficial">
+
+      <textarea id="cvedesc"
+        placeholder="Descripción de la vulnerabilidad"></textarea>
+
+      <button onclick="generarCVE()">
+        Generar HTML
+      </button>
+
+    </div>
+
+    <!-- ================= ACTOR ================= -->
+
+    <div id="actorTab" class="tab-content">
+
+      <h2>👤 Generador Threat Actor</h2>
+
+      <input id="actorname" placeholder="Nombre del actor">
+      <input id="motivacion" placeholder="Motivación">
+      <input id="sector" placeholder="Sectores afectados">
+      <input id="origen" placeholder="Origen">
+
+      <textarea id="actordesc"
+        placeholder="Descripción"></textarea>
+
+      <button onclick="generarActor()">
+        Generar HTML
+      </button>
+
+    </div>
+
+    <!-- RESULTADO -->
+
+    <h2>🧾 Resultado HTML</h2>
+
+    <textarea id="resultado"></textarea>
+
+    <button onclick="copiarHTML()" class="copy-btn">
+      📋 Copiar HTML
+    </button>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
